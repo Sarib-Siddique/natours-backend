@@ -12,6 +12,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoute');
+const viewRouter = require('./routes/viewRoutes');
+// const viewsController = require('./controllers/viewsController');
 
 const app = express();
 
@@ -70,14 +72,21 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.get('/', (req, res) => {
-  res.status(200).render('_base');
-});
+// app.get('/', (req, res) => {
+//   res.status(200).render('base', { tour: 'The Forest Hiker', user: 'Sarib' });
+// });
 
-app.get('overview', (req, res) => {
-  res.status(200).render('overview');
-});
+// app.get('/overview', (req, res) => {
+//   res.status(200).render('overview', { title: 'All Tours' });
+// });
 
+// app.get('/tour', (req, res) => {
+//   res.status(200).render('tour', { title: 'The Forest Hiker Tour' });
+// });
+
+app.use('/', viewRouter);
+app.use('/overview', viewRouter);
+app.use('/tour', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
