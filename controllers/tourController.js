@@ -1,7 +1,7 @@
+const AppError = require('../utils/appError');
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
-// const { deleteOne } = require('../models/reviewModel');
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -97,3 +97,21 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+exports.getToursWithin = (req, res, next) => {
+  const { distance, lanlng, unit } = req.params;
+  const { lat, lng } = lanlng.split(',');
+  if (!lat || !lng) {
+    next(
+      new AppError(
+        'Please provide latitude and longitude in the format lag,lng.',
+        404
+      )
+    );
+  }
+  console.log(distance, lat, lng, unit);
+
+  res.status(200).json({
+    status: 'success'
+  });
+};
